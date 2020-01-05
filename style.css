@@ -1,0 +1,17 @@
+.search-btn {
+    margin-top: 20px;
+}
+
+.col {
+    margin-left: 0;
+}
+
+
+
+
+@media screen and (max-width: 515px){
+    nav {
+        line-height: normal;
+        height: 75px;
+    }
+}
