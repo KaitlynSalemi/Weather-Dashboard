@@ -4,6 +4,14 @@ $(document).ready(function(){
     function displayWeather(){
         var city = userInput.val(); 
         console.log(city)
+        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ city +"&APPID=c87290682d457051080f9f293666d377"
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(response) {
+            console.log(response);
+        });
     }
 
 
