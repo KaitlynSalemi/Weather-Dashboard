@@ -146,6 +146,7 @@ $(document).ready(function(){
     $("#search-btn").on("click", function(event){
         event.preventDefault();
         userInput.val().trim();
+        userInput.empty();
         currentConditions();
         fiveDayForecast();
         searchHistory()
@@ -154,6 +155,7 @@ $(document).ready(function(){
 
     userInput.keypress(function (event) {
         if (event.which === 13) {
+            userInput.empty();
             currentConditions();
             fiveDayForecast();
             searchHistory()
