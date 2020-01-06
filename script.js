@@ -35,14 +35,13 @@ $(document).ready(function(){
     var humidity4 = $("#humidity4");
     var humidity5 = $("#humidity5");
 
+    var collection = $('.collection')
     
-    
-    function displayWeather(){
+    function currentConditions(){
         var city = userInput.val(); 
         // console.log(city)
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ city +"&APPID=c87290682d457051080f9f293666d377"
-        // var uviURL = "http://api.openweathermap.org/data/2.5/uvi/weather?q="+ city +"&APPID=c87290682d457051080f9f293666d377"
-
+        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=c87290682d457051080f9f293666d377"
+        
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -57,25 +56,15 @@ $(document).ready(function(){
             currentTemp.text("Temperature: "+(rounded)+"°F");
             currentHumidity.text("Humidity: "+(response.main.humidity)+"%");
             currentWindSpeed.text("Wind Speed: "+(response.wind.speed)+" mph");
-            currentUVI.text("UV Index: "+ (""));
             currentTitle.append(iconImg);
         });
 
-        // $.ajax({
-        //     url: uviURL,
-        //     method: "GET"
-        // }).then(function(response) {
-        //     console.log(response);
-           
-        // });
-        
-
     }
-
+    
     function fiveDayForecast(){
         var city = userInput.val(); 
         var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q="+ city +"&APPID=c87290682d457051080f9f293666d377"
-
+        
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -86,42 +75,42 @@ $(document).ready(function(){
             date3.text((month < 10 ? '0' : '') + month + '/' +(day < 10 ? '0' : '') + (day+3) + '/' + d.getFullYear());
             date4.text((month < 10 ? '0' : '') + month + '/' +(day < 10 ? '0' : '') + (day+4) + '/' + d.getFullYear());
             date5.text((month < 10 ? '0' : '') + month + '/' +(day < 10 ? '0' : '') + (day+5) + '/' + d.getFullYear());
-
+            
             var iconCode1 = response.list[0].weather[0].icon
             icon1.attr("src", "http://openweathermap.org/img/wn/"+iconCode1+"@2x.png");
-
+            
             var iconCode2 = response.list[1].weather[0].icon
             icon2.attr("src", "http://openweathermap.org/img/wn/"+iconCode2+"@2x.png");
-
+            
             var iconCode3 = response.list[2].weather[0].icon
             icon3.attr("src", "http://openweathermap.org/img/wn/"+iconCode3+"@2x.png");
-
+            
             var iconCode4 = response.list[3].weather[0].icon
             icon4.attr("src", "http://openweathermap.org/img/wn/"+iconCode4+"@2x.png");
-
+            
             var iconCode5 = response.list[4].weather[0].icon
             icon5.attr("src", "http://openweathermap.org/img/wn/"+iconCode5+"@2x.png");
             
             var tempF = (response.list[0].main.temp - 273.15) * 1.80 + 32;
             var rounded = tempF.toFixed(1);
             temp1.text("Temperature: "+(rounded)+"°F");
-
+            
             var tempF = (response.list[1].main.temp - 273.15) * 1.80 + 32;
             var rounded = tempF.toFixed(1);
             temp2.text("Temperature: "+(rounded)+"°F");
-
+            
             var tempF = (response.list[2].main.temp - 273.15) * 1.80 + 32;
             var rounded = tempF.toFixed(1);
             temp3.text("Temperature: "+(rounded)+"°F");
-
+            
             var tempF = (response.list[3].main.temp - 273.15) * 1.80 + 32;
             var rounded = tempF.toFixed(1);
             temp4.text("Temperature: "+(rounded)+"°F");
-
+            
             var tempF = (response.list[4].main.temp - 273.15) * 1.80 + 32;
             var rounded = tempF.toFixed(1);
             temp5.text("Temperature: "+(rounded)+"°F");
-
+            
             humidity1.text("Humidity: "+(response.list[0].main.humidity)+"%");
             humidity2.text("Humidity: "+(response.list[1].main.humidity)+"%");
             humidity3.text("Humidity: "+(response.list[2].main.humidity)+"%");
@@ -131,20 +120,52 @@ $(document).ready(function(){
         });
     }
 
+    function searchHistory(){
+        var city = userInput.val(); 
+        var searches = $("<a>").text(city);
+        searches.attr("class", "collection-item");
+        collection.append(searches)
 
-
+    }
+    
+    // function uvIndex(){
+    //     var city = userInput.val();
+    //     // var lon = 
+    //     // var lat =
+    //     var uviURL = "http://api.openweathermap.org/data/2.5/uvi/weather?lat=" + lat + "&lon=" + lon
+        
+    //     $.ajax({
+    //         url: uviURL,
+    //         method: "GET"
+    //     }).then(function(response) {
+    //         console.log(response);
+    //         currentUVI.text("UV Index: "+ (""));
+    //     });
+    // }
+    
     $("#search-btn").on("click", function(event){
         event.preventDefault();
         userInput.val().trim();
-        displayWeather();
+        currentConditions();
         fiveDayForecast();
+        searchHistory()
+        // uvIndex();
     });
 
     userInput.keypress(function (event) {
         if (event.which === 13) {
-            displayWeather();
+            currentConditions();
             fiveDayForecast();
+            searchHistory()
+            // uvIndex();
         }
+    });
+
+    $(document).on("click", ".collection-item", function(event) {
+        event.preventDefault();
+        var city = $(this).val();
+        console.log(city);
+
     });
 
 
