@@ -36,6 +36,9 @@ $(document).ready(function(){
     var humidity5 = $("#humidity5");
 
     var collection = $('.collection')
+
+    // var storageItems = [];
+    
     
     function currentConditions(){
         var city = userInput.val(); 
@@ -63,7 +66,7 @@ $(document).ready(function(){
     
     function fiveDayForecast(){
         var city = userInput.val(); 
-        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q="+ city +"&APPID=c87290682d457051080f9f293666d377"
+        var queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/forecast?q="+ city +"&APPID=c87290682d457051080f9f293666d377"
         
         $.ajax({
             url: queryURL,
@@ -121,11 +124,16 @@ $(document).ready(function(){
     }
 
     function searchHistory(){
+        // const userSearches = JSON.parse(localStorage.getItem('items'))
+        // for (let i = 0; i < storageItems.length; i++) {
+        //     var item = $("<a>").text(userSearches);
+        //     item.attr("class", "collection-item");
+        //     collection.append(item)
+        // }
         var city = userInput.val(); 
         var searches = $("<a>").text(city);
         searches.attr("class", "collection-item");
         collection.append(searches)
-
     }
     
     // function uvIndex(){
@@ -149,8 +157,13 @@ $(document).ready(function(){
         userInput.empty();
         currentConditions();
         fiveDayForecast();
-        searchHistory()
+        searchHistory();
         // uvIndex();
+        
+        // storageItems.push(userInput)
+        // console.log(storageItems);
+        
+        // localStorage.setItem('items', JSON.stringify(storageItems))
     });
 
     userInput.keypress(function (event) {
@@ -160,6 +173,12 @@ $(document).ready(function(){
             fiveDayForecast();
             searchHistory()
             // uvIndex();
+
+            // storageItems.push(userInput)
+            // console.log(storageItems);
+        
+            // localStorage.setItem('items', JSON.stringify(storageItems))
+
         }
     });
 
