@@ -40,7 +40,7 @@ $(document).ready(function(){
     function currentConditions(){
         var city = userInput.val(); 
         // console.log(city)
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=c87290682d457051080f9f293666d377"
+        var queryURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=c87290682d457051080f9f293666d377"
         
         $.ajax({
             url: queryURL,
@@ -48,7 +48,7 @@ $(document).ready(function(){
         }).then(function(response) {
             console.log(response);
             var iconCode = response.weather[0].icon
-            var iconURL = "http://openweathermap.org/img/wn/"+iconCode+"@2x.png"
+            var iconURL = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png"
             var iconImg = $("<img>").attr("src", iconURL);
             currentTitle.text((response.name)+" "+(currentDate));
             var tempF = (response.main.temp - 273.15) * 1.80 + 32;
@@ -132,7 +132,7 @@ $(document).ready(function(){
     //     var city = userInput.val();
     //     // var lon = 
     //     // var lat =
-    //     var uviURL = "http://api.openweathermap.org/data/2.5/uvi/weather?lat=" + lat + "&lon=" + lon
+    //     var uviURL = "https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/uvi/weather?lat=" + lat + "&lon=" + lon
         
     //     $.ajax({
     //         url: uviURL,
